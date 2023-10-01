@@ -13,6 +13,6 @@ class Surah {
     required this.numberofAyahs,
     required this.ayahTranslation,
     required this.basmallah,
-    required this.ayahs,
+    required this.ayahs
   });
 }
