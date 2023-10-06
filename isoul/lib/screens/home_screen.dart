@@ -34,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           children: [
             const SizedBox(
-              height: 20,
+              height: 40,
             ),
             Text(
               'Assalamualikum',
@@ -60,82 +60,16 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 7),
                 child: TextField(
-                  style: const TextStyle(color: Colors.white),
+                  style: const TextStyle(color: Colors.black),
                   autocorrect: false,
                   decoration: InputDecoration(
-                      fillColor: Colors.white,
+                      fillColor: const Color.fromARGB(255, 0, 0, 0),
                       hintText: 'Search',
                       border: InputBorder.none,
                       suffixIcon: const Icon(Icons.search),
                       suffixIconColor: AppConstants.secondaryColor),
                 ),
               ),
-            ),
-            const SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStatePropertyAll(
-                      AppConstants.subTitleTextColor,
-                    ),
-                  ),
-                  onPressed: () {},
-                  child: Text(
-                    "Surah",
-                    style: TextStyle(
-                      fontSize: AppConstants.defaultFontSize,
-                    ),
-                  ),
-                ),
-                ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStatePropertyAll(
-                      AppConstants.subTitleTextColor,
-                    ),
-                  ),
-                  onPressed: () {},
-                  child: Text(
-                    "Surah",
-                    style: TextStyle(
-                      fontSize: AppConstants.defaultFontSize,
-                    ),
-                  ),
-                ),
-                ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStatePropertyAll(
-                      AppConstants.subTitleTextColor,
-                    ),
-                  ),
-                  onPressed: () {},
-                  child: Text(
-                    "Surah",
-                    style: TextStyle(
-                      fontSize: AppConstants.defaultFontSize,
-                    ),
-                  ),
-                ),
-                ElevatedButton(
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStatePropertyAll(
-                      AppConstants.subTitleTextColor,
-                    ),
-                  ),
-                  onPressed: () {},
-                  child: Text(
-                    "Surah",
-                    style: TextStyle(
-                      fontSize: AppConstants.defaultFontSize,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 10,
             ),
             const SurahList(),
           ],
