@@ -17,19 +17,6 @@ class _HomeScreenState extends State<HomeScreen> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         resizeToAvoidBottomInset: false,
-        // appBar: AppBar(
-        //   backgroundColor: Colors.transparent,
-        //   title: Text(
-        //     "iSoul",
-        //     style: TextStyle(
-        //         color: AppConstants.subTitleTextColor,
-        //         fontSize: AppConstants.headingFontSize,
-        //         fontFamily: "Monospace",
-        //         letterSpacing: -2),
-                
-        //   ),
-        //   elevation: 0,
-        // ),
         body: ListView(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           children: [
