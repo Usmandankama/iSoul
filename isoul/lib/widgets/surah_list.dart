@@ -1,762 +1,111 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:isoul/models/surah.dart';
 import 'package:isoul/screens/surah_screen.dart';
+import 'package:http/http.dart' as http;
 
 class SurahList extends StatefulWidget {
   const SurahList({super.key});
+  // This class represents a stateful widget for displaying a list of Surahs.
+
   @override
   State<SurahList> createState() => _SurahListState();
 }
 
 class _SurahListState extends State<SurahList> {
   final GlobalKey _listKey = GlobalKey();
-  List<Widget> surahItem = [];
-  int index = 1;
+  List<dynamic> ayahts = [];
+  List<dynamic> surahsFromApi = [];
+  bool connectionError = false;
+
   @override
   void initState() {
     super.initState();
-    _addSurah();
+    // Initialize the widget state by fetching Quran data when it's created.
+    fetchQuranData();
   }
 
-  void _addSurah() {
-    List<Surah> surahs = [
-      Surah(
-        surahNameEng: 'The Opening',
-        surahNameArabic: 'Al-Fatihah',
-        cityRevealed: 'Makki',
-        numberofAyahs: 7,
-      ),
-      Surah(
-        surahNameEng: 'The Cow',
-        surahNameArabic: 'Al-Bakhrah',
-        cityRevealed: 'Madani',
-        numberofAyahs: 286,
-      ),
-      Surah(
-        surahNameEng: 'The Family of Imran',
-        surahNameArabic: 'Ali-Imran',
-        cityRevealed: 'Madani',
-        numberofAyahs: 200,
-      ),
-      Surah(
-        surahNameEng: 'The Women',
-        surahNameArabic: 'An-Nisa',
-        cityRevealed: 'Madani',
-        numberofAyahs: 176,
-      ),
-      Surah(
-        surahNameEng: 'The Opening',
-        surahNameArabic: 'Al-Fatihah',
-        cityRevealed: 'Makki',
-        numberofAyahs: 7,
-      ),
-      Surah(
-        surahNameEng: 'The Cow',
-        surahNameArabic: 'Al-Bakhrah',
-        cityRevealed: 'Madani',
-        numberofAyahs: 286,
-      ),
-      Surah(
-        surahNameEng: 'The Family of Imran',
-        surahNameArabic: 'Ali-Imran',
-        cityRevealed: 'Madani',
-        numberofAyahs: 200,
-      ),
-      Surah(
-        surahNameEng: 'The Women',
-        surahNameArabic: 'An-Nisa',
-        cityRevealed: 'Madani',
-        numberofAyahs: 176,
-      ),
-      Surah(
-        surahNameEng: 'The Opening',
-        surahNameArabic: 'Al-Fatihah',
-        cityRevealed: 'Makki',
-        numberofAyahs: 7,
-      ),
-      Surah(
-        surahNameEng: 'The Cow',
-        surahNameArabic: 'Al-Bakhrah',
-        cityRevealed: 'Madani',
-        numberofAyahs: 286,
-      ),
-      Surah(
-        surahNameEng: 'The Family of Imran',
-        surahNameArabic: 'Ali-Imran',
-        cityRevealed: 'Madani',
-        numberofAyahs: 200,
-      ),
-      Surah(
-        surahNameEng: 'The Women',
-        surahNameArabic: 'An-Nisa',
-        cityRevealed: 'Madani',
-        numberofAyahs: 176,
-      ),
-      Surah(
-        surahNameEng: 'The Opening',
-        surahNameArabic: 'Al-Fatihah',
-        cityRevealed: 'Makki',
-        numberofAyahs: 7,
-      ),
-      Surah(
-        surahNameEng: 'The Cow',
-        surahNameArabic: 'Al-Bakhrah',
-        cityRevealed: 'Madani',
-        numberofAyahs: 286,
-      ),
-      Surah(
-        surahNameEng: 'The Family of Imran',
-        surahNameArabic: 'Ali-Imran',
-        cityRevealed: 'Madani',
-        numberofAyahs: 200,
-      ),
-      Surah(
-        surahNameEng: 'The Women',
-        surahNameArabic: 'An-Nisa',
-        cityRevealed: 'Madani',
-        numberofAyahs: 176,
-      ),
-      Surah(
-        surahNameEng: 'The Opening',
-        surahNameArabic: 'Al-Fatihah',
-        cityRevealed: 'Makki',
-        numberofAyahs: 7,
-      ),
-      Surah(
-        surahNameEng: 'The Cow',
-        surahNameArabic: 'Al-Bakhrah',
-        cityRevealed: 'Madani',
-        numberofAyahs: 286,
-      ),
-      Surah(
-        surahNameEng: 'The Family of Imran',
-        surahNameArabic: 'Ali-Imran',
-        cityRevealed: 'Madani',
-        numberofAyahs: 200,
-      ),
-      Surah(
-        surahNameEng: 'The Women',
-        surahNameArabic: 'An-Nisa',
-        cityRevealed: 'Madani',
-        numberofAyahs: 176,
-      ),
-      Surah(
-        surahNameEng: 'The Opening',
-        surahNameArabic: 'Al-Fatihah',
-        cityRevealed: 'Makki',
-        numberofAyahs: 7,
-      ),
-      Surah(
-        surahNameEng: 'The Cow',
-        surahNameArabic: 'Al-Bakhrah',
-        cityRevealed: 'Madani',
-        numberofAyahs: 286,
-      ),
-      Surah(
-        surahNameEng: 'The Family of Imran',
-        surahNameArabic: 'Ali-Imran',
-        cityRevealed: 'Madani',
-        numberofAyahs: 200,
-      ),
-      Surah(
-        surahNameEng: 'The Women',
-        surahNameArabic: 'An-Nisa',
-        cityRevealed: 'Madani',
-        numberofAyahs: 176,
-      ),
-      Surah(
-        surahNameEng: 'The Opening',
-        surahNameArabic: 'Al-Fatihah',
-        cityRevealed: 'Makki',
-        numberofAyahs: 7,
-      ),
-      Surah(
-        surahNameEng: 'The Cow',
-        surahNameArabic: 'Al-Bakhrah',
-        cityRevealed: 'Madani',
-        numberofAyahs: 286,
-      ),
-      Surah(
-        surahNameEng: 'The Family of Imran',
-        surahNameArabic: 'Ali-Imran',
-        cityRevealed: 'Madani',
-        numberofAyahs: 200,
-      ),
-      Surah(
-        surahNameEng: 'The Women',
-        surahNameArabic: 'An-Nisa',
-        cityRevealed: 'Madani',
-        numberofAyahs: 176,
-      ),
-      Surah(
-        surahNameEng: 'The Opening',
-        surahNameArabic: 'Al-Fatihah',
-        cityRevealed: 'Makki',
-        numberofAyahs: 7,
-      ),
-      Surah(
-        surahNameEng: 'The Cow',
-        surahNameArabic: 'Al-Bakhrah',
-        cityRevealed: 'Madani',
-        numberofAyahs: 286,
-      ),
-      Surah(
-        surahNameEng: 'The Family of Imran',
-        surahNameArabic: 'Ali-Imran',
-        cityRevealed: 'Madani',
-        numberofAyahs: 200,
-      ),
-      Surah(
-        surahNameEng: 'The Women',
-        surahNameArabic: 'An-Nisa',
-        cityRevealed: 'Madani',
-        numberofAyahs: 176,
-      ),
-      Surah(
-        surahNameEng: 'The Opening',
-        surahNameArabic: 'Al-Fatihah',
-        cityRevealed: 'Makki',
-        numberofAyahs: 7,
-      ),
-      Surah(
-        surahNameEng: 'The Cow',
-        surahNameArabic: 'Al-Bakhrah',
-        cityRevealed: 'Madani',
-        numberofAyahs: 286,
-      ),
-      Surah(
-        surahNameEng: 'The Family of Imran',
-        surahNameArabic: 'Ali-Imran',
-        cityRevealed: 'Madani',
-        numberofAyahs: 200,
-      ),
-      Surah(
-        surahNameEng: 'The Women',
-        surahNameArabic: 'An-Nisa',
-        cityRevealed: 'Madani',
-        numberofAyahs: 176,
-      ),
-      Surah(
-        surahNameEng: 'The Opening',
-        surahNameArabic: 'Al-Fatihah',
-        cityRevealed: 'Makki',
-        numberofAyahs: 7,
-      ),
-      Surah(
-        surahNameEng: 'The Cow',
-        surahNameArabic: 'Al-Bakhrah',
-        cityRevealed: 'Madani',
-        numberofAyahs: 286,
-      ),
-      Surah(
-        surahNameEng: 'The Family of Imran',
-        surahNameArabic: 'Ali-Imran',
-        cityRevealed: 'Madani',
-        numberofAyahs: 200,
-      ),
-      Surah(
-        surahNameEng: 'The Women',
-        surahNameArabic: 'An-Nisa',
-        cityRevealed: 'Madani',
-        numberofAyahs: 176,
-      ),
-      Surah(
-        surahNameEng: 'The Opening',
-        surahNameArabic: 'Al-Fatihah',
-        cityRevealed: 'Makki',
-        numberofAyahs: 7,
-      ),
-      Surah(
-        surahNameEng: 'The Cow',
-        surahNameArabic: 'Al-Bakhrah',
-        cityRevealed: 'Madani',
-        numberofAyahs: 286,
-      ),
-      Surah(
-        surahNameEng: 'The Family of Imran',
-        surahNameArabic: 'Ali-Imran',
-        cityRevealed: 'Madani',
-        numberofAyahs: 200,
-      ),
-      Surah(
-        surahNameEng: 'The Women',
-        surahNameArabic: 'An-Nisa',
-        cityRevealed: 'Madani',
-        numberofAyahs: 176,
-      ),
-      Surah(
-        surahNameEng: 'The Opening',
-        surahNameArabic: 'Al-Fatihah',
-        cityRevealed: 'Makki',
-        numberofAyahs: 7,
-      ),
-      Surah(
-        surahNameEng: 'The Cow',
-        surahNameArabic: 'Al-Bakhrah',
-        cityRevealed: 'Madani',
-        numberofAyahs: 286,
-      ),
-      Surah(
-        surahNameEng: 'The Family of Imran',
-        surahNameArabic: 'Ali-Imran',
-        cityRevealed: 'Madani',
-        numberofAyahs: 200,
-      ),
-      Surah(
-        surahNameEng: 'The Women',
-        surahNameArabic: 'An-Nisa',
-        cityRevealed: 'Madani',
-        numberofAyahs: 176,
-      ),
-      Surah(
-        surahNameEng: 'The Opening',
-        surahNameArabic: 'Al-Fatihah',
-        cityRevealed: 'Makki',
-        numberofAyahs: 7,
-      ),
-      Surah(
-        surahNameEng: 'The Cow',
-        surahNameArabic: 'Al-Bakhrah',
-        cityRevealed: 'Madani',
-        numberofAyahs: 286,
-      ),
-      Surah(
-        surahNameEng: 'The Family of Imran',
-        surahNameArabic: 'Ali-Imran',
-        cityRevealed: 'Madani',
-        numberofAyahs: 200,
-      ),
-      Surah(
-        surahNameEng: 'The Women',
-        surahNameArabic: 'An-Nisa',
-        cityRevealed: 'Madani',
-        numberofAyahs: 176,
-      ),
-      Surah(
-        surahNameEng: 'The Opening',
-        surahNameArabic: 'Al-Fatihah',
-        cityRevealed: 'Makki',
-        numberofAyahs: 7,
-      ),
-      Surah(
-        surahNameEng: 'The Cow',
-        surahNameArabic: 'Al-Bakhrah',
-        cityRevealed: 'Madani',
-        numberofAyahs: 286,
-      ),
-      Surah(
-        surahNameEng: 'The Family of Imran',
-        surahNameArabic: 'Ali-Imran',
-        cityRevealed: 'Madani',
-        numberofAyahs: 200,
-      ),
-      Surah(
-        surahNameEng: 'The Women',
-        surahNameArabic: 'An-Nisa',
-        cityRevealed: 'Madani',
-        numberofAyahs: 176,
-      ),
-      Surah(
-        surahNameEng: 'The Opening',
-        surahNameArabic: 'Al-Fatihah',
-        cityRevealed: 'Makki',
-        numberofAyahs: 7,
-      ),
-      Surah(
-        surahNameEng: 'The Cow',
-        surahNameArabic: 'Al-Bakhrah',
-        cityRevealed: 'Madani',
-        numberofAyahs: 286,
-      ),
-      Surah(
-        surahNameEng: 'The Family of Imran',
-        surahNameArabic: 'Ali-Imran',
-        cityRevealed: 'Madani',
-        numberofAyahs: 200,
-      ),
-      Surah(
-        surahNameEng: 'The Women',
-        surahNameArabic: 'An-Nisa',
-        cityRevealed: 'Madani',
-        numberofAyahs: 176,
-      ),
-      Surah(
-        surahNameEng: 'The Opening',
-        surahNameArabic: 'Al-Fatihah',
-        cityRevealed: 'Makki',
-        numberofAyahs: 7,
-      ),
-      Surah(
-        surahNameEng: 'The Cow',
-        surahNameArabic: 'Al-Bakhrah',
-        cityRevealed: 'Madani',
-        numberofAyahs: 286,
-      ),
-      Surah(
-        surahNameEng: 'The Family of Imran',
-        surahNameArabic: 'Ali-Imran',
-        cityRevealed: 'Madani',
-        numberofAyahs: 200,
-      ),
-      Surah(
-        surahNameEng: 'The Women',
-        surahNameArabic: 'An-Nisa',
-        cityRevealed: 'Madani',
-        numberofAyahs: 176,
-      ),
-      Surah(
-        surahNameEng: 'The Opening',
-        surahNameArabic: 'Al-Fatihah',
-        cityRevealed: 'Makki',
-        numberofAyahs: 7,
-      ),
-      Surah(
-        surahNameEng: 'The Cow',
-        surahNameArabic: 'Al-Bakhrah',
-        cityRevealed: 'Madani',
-        numberofAyahs: 286,
-      ),
-      Surah(
-        surahNameEng: 'The Family of Imran',
-        surahNameArabic: 'Ali-Imran',
-        cityRevealed: 'Madani',
-        numberofAyahs: 200,
-      ),
-      Surah(
-        surahNameEng: 'The Women',
-        surahNameArabic: 'An-Nisa',
-        cityRevealed: 'Madani',
-        numberofAyahs: 176,
-      ),
-      Surah(
-        surahNameEng: 'The Opening',
-        surahNameArabic: 'Al-Fatihah',
-        cityRevealed: 'Makki',
-        numberofAyahs: 7,
-      ),
-      Surah(
-        surahNameEng: 'The Cow',
-        surahNameArabic: 'Al-Bakhrah',
-        cityRevealed: 'Madani',
-        numberofAyahs: 286,
-      ),
-      Surah(
-        surahNameEng: 'The Family of Imran',
-        surahNameArabic: 'Ali-Imran',
-        cityRevealed: 'Madani',
-        numberofAyahs: 200,
-      ),
-      Surah(
-        surahNameEng: 'The Women',
-        surahNameArabic: 'An-Nisa',
-        cityRevealed: 'Madani',
-        numberofAyahs: 176,
-      ),
-      Surah(
-        surahNameEng: 'The Opening',
-        surahNameArabic: 'Al-Fatihah',
-        cityRevealed: 'Makki',
-        numberofAyahs: 7,
-      ),
-      Surah(
-        surahNameEng: 'The Cow',
-        surahNameArabic: 'Al-Bakhrah',
-        cityRevealed: 'Madani',
-        numberofAyahs: 286,
-      ),
-      Surah(
-        surahNameEng: 'The Family of Imran',
-        surahNameArabic: 'Ali-Imran',
-        cityRevealed: 'Madani',
-        numberofAyahs: 200,
-      ),
-      Surah(
-        surahNameEng: 'The Women',
-        surahNameArabic: 'An-Nisa',
-        cityRevealed: 'Madani',
-        numberofAyahs: 176,
-      ),
-      Surah(
-        surahNameEng: 'The Opening',
-        surahNameArabic: 'Al-Fatihah',
-        cityRevealed: 'Makki',
-        numberofAyahs: 7,
-      ),
-      Surah(
-        surahNameEng: 'The Cow',
-        surahNameArabic: 'Al-Bakhrah',
-        cityRevealed: 'Madani',
-        numberofAyahs: 286,
-      ),
-      Surah(
-        surahNameEng: 'The Family of Imran',
-        surahNameArabic: 'Ali-Imran',
-        cityRevealed: 'Madani',
-        numberofAyahs: 200,
-      ),
-      Surah(
-        surahNameEng: 'The Women',
-        surahNameArabic: 'An-Nisa',
-        cityRevealed: 'Madani',
-        numberofAyahs: 176,
-      ),
-      Surah(
-        surahNameEng: 'The Opening',
-        surahNameArabic: 'Al-Fatihah',
-        cityRevealed: 'Makki',
-        numberofAyahs: 7,
-      ),
-      Surah(
-        surahNameEng: 'The Cow',
-        surahNameArabic: 'Al-Bakhrah',
-        cityRevealed: 'Madani',
-        numberofAyahs: 286,
-      ),
-      Surah(
-        surahNameEng: 'The Family of Imran',
-        surahNameArabic: 'Ali-Imran',
-        cityRevealed: 'Madani',
-        numberofAyahs: 200,
-      ),
-      Surah(
-        surahNameEng: 'The Women',
-        surahNameArabic: 'An-Nisa',
-        cityRevealed: 'Madani',
-        numberofAyahs: 176,
-      ),
-      Surah(
-        surahNameEng: 'The Opening',
-        surahNameArabic: 'Al-Fatihah',
-        cityRevealed: 'Makki',
-        numberofAyahs: 7,
-      ),
-      Surah(
-        surahNameEng: 'The Cow',
-        surahNameArabic: 'Al-Bakhrah',
-        cityRevealed: 'Madani',
-        numberofAyahs: 286,
-      ),
-      Surah(
-        surahNameEng: 'The Family of Imran',
-        surahNameArabic: 'Ali-Imran',
-        cityRevealed: 'Madani',
-        numberofAyahs: 200,
-      ),
-      Surah(
-        surahNameEng: 'The Women',
-        surahNameArabic: 'An-Nisa',
-        cityRevealed: 'Madani',
-        numberofAyahs: 176,
-      ),
-      Surah(
-        surahNameEng: 'The Opening',
-        surahNameArabic: 'Al-Fatihah',
-        cityRevealed: 'Makki',
-        numberofAyahs: 7,
-      ),
-      Surah(
-        surahNameEng: 'The Cow',
-        surahNameArabic: 'Al-Bakhrah',
-        cityRevealed: 'Madani',
-        numberofAyahs: 286,
-      ),
-      Surah(
-        surahNameEng: 'The Family of Imran',
-        surahNameArabic: 'Ali-Imran',
-        cityRevealed: 'Madani',
-        numberofAyahs: 200,
-      ),
-      Surah(
-        surahNameEng: 'The Women',
-        surahNameArabic: 'An-Nisa',
-        cityRevealed: 'Madani',
-        numberofAyahs: 176,
-      ),
-      Surah(
-        surahNameEng: 'The Opening',
-        surahNameArabic: 'Al-Fatihah',
-        cityRevealed: 'Makki',
-        numberofAyahs: 7,
-      ),
-      Surah(
-        surahNameEng: 'The Cow',
-        surahNameArabic: 'Al-Bakhrah',
-        cityRevealed: 'Madani',
-        numberofAyahs: 286,
-      ),
-      Surah(
-        surahNameEng: 'The Family of Imran',
-        surahNameArabic: 'Ali-Imran',
-        cityRevealed: 'Madani',
-        numberofAyahs: 200,
-      ),
-      Surah(
-        surahNameEng: 'The Women',
-        surahNameArabic: 'An-Nisa',
-        cityRevealed: 'Madani',
-        numberofAyahs: 176,
-      ),
-      Surah(
-        surahNameEng: 'The Opening',
-        surahNameArabic: 'Al-Fatihah',
-        cityRevealed: 'Makki',
-        numberofAyahs: 7,
-      ),
-      Surah(
-        surahNameEng: 'The Cow',
-        surahNameArabic: 'Al-Bakhrah',
-        cityRevealed: 'Madani',
-        numberofAyahs: 286,
-      ),
-      Surah(
-        surahNameEng: 'The Family of Imran',
-        surahNameArabic: 'Ali-Imran',
-        cityRevealed: 'Madani',
-        numberofAyahs: 200,
-      ),
-      Surah(
-        surahNameEng: 'The Women',
-        surahNameArabic: 'An-Nisa',
-        cityRevealed: 'Madani',
-        numberofAyahs: 176,
-      ),
-      Surah(
-        surahNameEng: 'The Opening',
-        surahNameArabic: 'Al-Fatihah',
-        cityRevealed: 'Makki',
-        numberofAyahs: 7,
-      ),
-      Surah(
-        surahNameEng: 'The Cow',
-        surahNameArabic: 'Al-Bakhrah',
-        cityRevealed: 'Madani',
-        numberofAyahs: 286,
-      ),
-      Surah(
-        surahNameEng: 'The Family of Imran',
-        surahNameArabic: 'Ali-Imran',
-        cityRevealed: 'Madani',
-        numberofAyahs: 200,
-      ),
-      Surah(
-        surahNameEng: 'The Women',
-        surahNameArabic: 'An-Nisa',
-        cityRevealed: 'Madani',
-        numberofAyahs: 176,
-      ),
-      Surah(
-        surahNameEng: 'The Opening',
-        surahNameArabic: 'Al-Fatihah',
-        cityRevealed: 'Makki',
-        numberofAyahs: 7,
-      ),
-      Surah(
-        surahNameEng: 'The Cow',
-        surahNameArabic: 'Al-Bakhrah',
-        cityRevealed: 'Madani',
-        numberofAyahs: 286,
-      ),
-      Surah(
-        surahNameEng: 'The Family of Imran',
-        surahNameArabic: 'Ali-Imran',
-        cityRevealed: 'Madani',
-        numberofAyahs: 200,
-      ),
-      Surah(
-        surahNameEng: 'The Women',
-        surahNameArabic: 'An-Nisa',
-        cityRevealed: 'Madani',
-        numberofAyahs: 176,
-      ),
-      Surah(
-        surahNameEng: 'The Family of Imran',
-        surahNameArabic: 'Ali-Imran',
-        cityRevealed: 'Madani',
-        numberofAyahs: 200,
-      ),
-      Surah(
-        surahNameEng: 'The Women',
-        surahNameArabic: 'An-Nisa',
-        cityRevealed: 'Madani',
-        numberofAyahs: 176,
-      ),
-      Surah(
-        surahNameEng: 'The Opening',
-        surahNameArabic: 'Al-Fatihah',
-        cityRevealed: 'Makki',
-        numberofAyahs: 7,
-      ),
-      Surah(
-        surahNameEng: 'The Cow',
-        surahNameArabic: 'Al-Bakhrah',
-        cityRevealed: 'Madani',
-        numberofAyahs: 286,
-      ),
-      Surah(
-        surahNameEng: 'The Family of Imran',
-        surahNameArabic: 'Ali-Imran',
-        cityRevealed: 'Madani',
-        numberofAyahs: 200,
-      ),
-      Surah(
-        surahNameEng: 'The Women',
-        surahNameArabic: 'An-Nisa',
-        cityRevealed: 'Madani',
-        numberofAyahs: 176,
-      ),
-    ];
-    for (var surah in surahs) {
-      surahItem.add(_buildTile(surah));
-      index += 1;
+  void fetchQuranData() async {
+    // Function to fetch Quran data from the API.
+    const url = 'http://api.alquran.cloud/v1/quran/quran-uthmani';
+    final uri = Uri.parse(url);
+    final response = await http.get(uri);
+    final body = response.body;
+    final json = jsonDecode(body);
+    final results = json['data']['surahs'];
+
+    if (response.statusCode == 200) {
+      // If the API call is successful, update the state with the fetched data.
+      setState(() {
+        surahsFromApi = results;
+      });
+    } else {
+      // If there is an error in the API call, set a connection error flag.
+      setState(() {
+        connectionError = true;
+      });
     }
-  }
-
-  Widget _buildTile(Surah surah) {
-    return Column(
-      children: [
-        ListTile(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => SurahPage(surah: surah),
-              ),
-            );
-          },
-          title: Text(
-            "${surah.surahNameArabic} (${surah.surahNameEng})",
-            style: const TextStyle(fontSize: 15),
-          ),
-          leading: Text(
-            "$index",
-            style: const TextStyle(
-              fontSize: 20,
-              // fontFamily: "Cursive",
-            ),
-          ),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
-        ),
-        const Divider(
-          color: Color.fromARGB(148, 175, 174, 174),
-          thickness: .8,
-        )
-      ],
-    );
   }
 
   @override
   Widget build(BuildContext context) {
-    // getSurah();
     return ListView.builder(
-        shrinkWrap: true,
-        key: _listKey,
-        physics: const NeverScrollableScrollPhysics(),
-        padding: const EdgeInsets.symmetric(vertical: 10),
-        itemCount: surahItem.length,
-        itemBuilder: (context, index) {
-          return surahItem[index];
-        });
+      shrinkWrap: true,
+      key: _listKey,
+      physics: const NeverScrollableScrollPhysics(),
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      itemCount: surahsFromApi.length,
+      itemBuilder: (context, index) {
+        final surah = surahsFromApi[index];
+        final listOfAyahs = surah['ayahs'];
+        ayahts = listOfAyahs;
+        final name = surah['name'];
+        final engName = surah['englishNameTranslation'];
+
+        var surat = Surah(
+            surahNameEng: surah['englishNameTranslation'],
+            surahNameArabic: surah['name'],
+            cityRevealed: surah['revelationType'],
+            ayahts: listOfAyahs);
+
+        return connectionError
+            ? const Center(child: Text("Connection Error"))
+            // If there is a connection error, display an error message.
+            : Column(
+                children: [
+                  ListTile(
+                    textColor: Colors.white70,
+                    onTap: () {
+                      // Navigate to a Surah details page on item click.
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SurahPage(surah: surat),
+                        ),
+                      );
+                    },
+                    leading: Text(
+                      engName,
+                      style: const TextStyle(fontSize: 15),
+                    ),
+                    trailing: Text(
+                      name,
+                      style: const TextStyle(
+                        fontSize: 20,
+                      ),
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  const Divider(
+                    color: Color.fromARGB(148, 175, 174, 174),
+                    thickness: .8,
+                  )
+                ],
+              );
+      },
+    );
   }
 }

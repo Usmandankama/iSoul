@@ -14,10 +14,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'iSoul',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 36, 41, 51)),
         useMaterial3: true,
       ),
       home: const StartupScreen()
     );
   }
-}
+} 
