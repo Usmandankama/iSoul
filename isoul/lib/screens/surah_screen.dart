@@ -30,9 +30,9 @@ class _SurahPageState extends State<SurahPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: const Color.fromARGB(255, 223, 208, 124),
       appBar: AppBar(
-        elevation: 0,
+        backgroundColor: const Color.fromARGB(148, 197, 96, 255),
         foregroundColor: Colors.white,
         title: Text(
           widget.surah.surahNameArabic,

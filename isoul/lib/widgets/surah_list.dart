@@ -8,7 +8,6 @@ import 'package:http/http.dart' as http;
 class SurahList extends StatefulWidget {
   const SurahList({super.key});
   // This class represents a stateful widget for displaying a list of Surahs.
-
   @override
   State<SurahList> createState() => _SurahListState();
 }
@@ -28,23 +27,31 @@ class _SurahListState extends State<SurahList> {
 
   void fetchQuranData() async {
     // Function to fetch Quran data from the API.
-    const url = 'http://api.alquran.cloud/v1/quran/quran-uthmani';
-    final uri = Uri.parse(url);
-    final response = await http.get(uri);
-    final body = response.body;
-    final json = jsonDecode(body);
-    final results = json['data']['surahs'];
+    try {
+      const url = 'http://api.alquran.cloud/v1/quran/quran-uthmani';
+      final uri = Uri.parse(url);
+      final response = await http.get(uri);
+      final body = response.body;
+      final json = jsonDecode(body);
+      final results = json['data']['surahs'];
 
-    if (response.statusCode == 200) {
-      // If the API call is successful, update the state with the fetched data.
-      setState(() {
-        surahsFromApi = results;
-      });
-    } else {
-      // If there is an error in the API call, set a connection error flag.
-      setState(() {
-        connectionError = true;
-      });
+      if (response.statusCode == 200) {
+        // If the API call is successful, update the state with the fetched data.
+        setState(() {
+          surahsFromApi = results;
+        });
+      } else {
+        // If there is an error in the API call, set a connection error flag.
+        setState(() {
+          connectionError = true;
+        });
+      }
+    } catch (e) {
+      const Center(
+          child: Text(
+        "Connection Error",
+        style: TextStyle(color: Colors.white, fontSize: 40),
+      ));
     }
   }
 
@@ -62,49 +69,57 @@ class _SurahListState extends State<SurahList> {
         ayahts = listOfAyahs;
         final name = surah['name'];
         final engName = surah['englishNameTranslation'];
-
         var surat = Surah(
             surahNameEng: surah['englishNameTranslation'],
             surahNameArabic: surah['name'],
             cityRevealed: surah['revelationType'],
             ayahts: listOfAyahs);
-
-        return connectionError
-            ? const Center(child: Text("Connection Error"))
-            // If there is a connection error, display an error message.
-            : Column(
-                children: [
-                  ListTile(
-                    textColor: Colors.white70,
-                    onTap: () {
-                      // Navigate to a Surah details page on item click.
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => SurahPage(surah: surat),
+        try {
+          return connectionError
+              ? const Center(
+                  child: Text(
+                  "Connection Error",
+                  style: TextStyle(color: Colors.white, fontSize: 40),
+                ))
+              // If there is a connection error, display an error message.
+              : Column(
+                  children: [
+                    ListTile(
+                      textColor: Colors.white70,
+                      onTap: () {
+                        // Navigate to a Surah details page on item click.
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SurahPage(surah: surat),
+                          ),
+                        );
+                      },
+                      leading: Text(
+                        engName,
+                        style: const TextStyle(fontSize: 15),
+                      ),
+                      trailing: Text(
+                        name,
+                        style: const TextStyle(
+                          fontSize: 20,
                         ),
-                      );
-                    },
-                    leading: Text(
-                      engName,
-                      style: const TextStyle(fontSize: 15),
-                    ),
-                    trailing: Text(
-                      name,
-                      style: const TextStyle(
-                        fontSize: 20,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
                       ),
                     ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                  const Divider(
-                    color: Color.fromARGB(148, 175, 174, 174),
-                    thickness: .8,
-                  )
-                ],
-              );
+                    const Divider(
+                      color: Color.fromARGB(148, 175, 174, 174),
+                      thickness: .8,
+                    )
+                  ],
+                );
+        } catch (e) {
+          return const Center(
+            child: Text("Connection Error"),
+          );
+        }
       },
     );
   }
