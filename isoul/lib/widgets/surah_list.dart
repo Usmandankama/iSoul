@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:isoul/models/surah.dart';
-import 'package:isoul/screens/surah_screen.dart';
+import 'package:isoul/screens/surah_content.dart';
 import 'package:http/http.dart' as http;
 import 'package:isoul/custom/contants.dart' as colors;
 
@@ -93,7 +93,7 @@ class _SurahListState extends State<SurahList> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => SurahPage(surah: surat),
+                            builder: (context) => SurahContent(surah: surat),
                           ),
                         );
                       },

@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import '../models/surah.dart';
 import 'package:isoul/custom/contants.dart' as colors;
 
-class SurahPage extends StatefulWidget {
+class SurahContent extends StatefulWidget {
   final Surah surah;
-  const SurahPage({super.key, required this.surah});
+  const SurahContent({super.key, required this.surah});
 
   @override
-  State<SurahPage> createState() => _SurahPageState();
+  State<SurahContent> createState() => _SurahContentState();
 }
 
-class _SurahPageState extends State<SurahPage> {
-  bool isLightMode = false;
+class _SurahContentState extends State<SurahContent> {
+  bool isLightMode = true;
   List<dynamic> ayahts = [];
   int index = 1;
 
@@ -43,8 +43,8 @@ class _SurahPageState extends State<SurahPage> {
             Text(
               widget.surah.surahNameArabic,
               style: const TextStyle(
-                // color: isLightMode ? Colors.black : colors.primaryFontColor,
-              ),
+                  // color: isLightMode ? Colors.black : colors.primaryFontColor,
+                  ),
             ),
             const SizedBox(width: 20),
             IconButton(
@@ -65,31 +65,31 @@ class _SurahPageState extends State<SurahPage> {
         ),
       ),
       body: ListView.builder(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          itemCount: ayahts.length,
-          itemBuilder: (context, index) {
-            return Column(
-              children: [
-                ListTile(
-                  textColor:
-                      isLightMode ? Colors.black : colors.primaryFontColor,
-                  trailing: Text(
-                    "$index",
-                    style: TextStyle(fontSize: screenheight > 600 ? 25 : 20),
-                  ),
-                  title: Text(
-                    ayahts[index]['text'],
-                    textDirection: TextDirection.rtl,
-                    style: TextStyle(fontSize: screenheight > 600 ? 25 : 20),
-                  ),
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        itemCount: ayahts.length,
+        itemBuilder: (context, index) {
+          return Column(
+            children: [
+              ListTile(
+                textColor: isLightMode ? Colors.black : colors.primaryFontColor,
+                trailing: Text(
+                  "$index",
+                  style: TextStyle(fontSize: screenheight > 600 ? 25 : 20),
                 ),
-                const Divider(
-                  color: Color.fromARGB(117, 190, 190, 190),
-                  thickness: 1.2,
-                )
-              ],
-            );
-          }),
+                title: Text(
+                  ayahts[index]['text'],
+                  textDirection: TextDirection.rtl,
+                  style: TextStyle(fontSize: screenheight > 600 ? 25 : 20),
+                ),
+              ),
+              const Divider(
+                color: Color.fromARGB(117, 190, 190, 190),
+                thickness: 1.2,
+              )
+            ],
+          );
+        },
+      ),
     );
   }
 }
