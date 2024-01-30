@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/surah.dart';
+import 'package:isoul/custom/contants.dart' as colors;
 
 class SurahPage extends StatefulWidget {
   final Surah surah;
@@ -10,6 +11,7 @@ class SurahPage extends StatefulWidget {
 }
 
 class _SurahPageState extends State<SurahPage> {
+  bool isLightMode = false;
   List<dynamic> ayahts = [];
   int index = 1;
 
@@ -29,13 +31,24 @@ class _SurahPageState extends State<SurahPage> {
 
   @override
   Widget build(BuildContext context) {
+    double screenheight = MediaQuery.of(context).size.height;
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 223, 208, 124),
+      backgroundColor: Colors.black,
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(148, 197, 96, 255),
-        foregroundColor: Colors.white,
-        title: Text(
-          widget.surah.surahNameArabic,
+        backgroundColor: colors.backgroundColor,
+        foregroundColor: colors.primaryFontColor,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Text(
+              widget.surah.surahNameArabic,
+            ),
+            const SizedBox(width: 20),
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.light_mode_rounded),
+            ),
+          ],
         ),
       ),
       body: ListView.builder(
@@ -45,12 +58,15 @@ class _SurahPageState extends State<SurahPage> {
             return Column(
               children: [
                 ListTile(
-                  textColor: Colors.white,
-                  trailing: Text("$index"),
+                  textColor: colors.primaryFontColor,
+                  trailing: Text(
+                    "$index",
+                    style: TextStyle(fontSize: screenheight > 600 ? 25 : 20),
+                  ),
                   title: Text(
                     ayahts[index]['text'],
                     textDirection: TextDirection.rtl,
-                    style: const TextStyle(fontSize: 20),
+                    style: TextStyle(fontSize: screenheight > 600 ? 25 : 20),
                   ),
                 ),
                 const Divider(

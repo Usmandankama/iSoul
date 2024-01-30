@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:isoul/widgets/surah_list.dart';
+import 'package:isoul/custom/contants.dart' as colors;
 
 class HomeContent extends StatefulWidget {
   const HomeContent({super.key});
@@ -14,13 +15,11 @@ class _HomeContentState extends State<HomeContent> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Al-Quran'),
-        backgroundColor: const Color.fromARGB(148, 197, 96, 255),
+        backgroundColor: colors.backgroundColor,
         centerTitle: true,
       ),
-      backgroundColor: const Color.fromARGB(148, 197, 96, 255),
-      body: ListView(
-        children: [SurahList()],
-      ),
+      backgroundColor: colors.backgroundColor,
+      body: const SurahList(),
     );
   }
 }

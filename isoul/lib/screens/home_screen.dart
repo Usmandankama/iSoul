@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:isoul/widgets/menu_items.dart';
-import 'package:isoul/widgets/surah_list.dart';
+import 'package:isoul/custom/contants.dart' as colors;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -10,153 +10,147 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
-  late TabController _tabController;
-  @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(length: 3, vsync: this);
-  }
-
-  // @override
-  // void dispose() {
-  //   super.dispose();
-  //   _tabController.dispose();
-  // }
-
   @override
   Widget build(BuildContext context) {
-    double screen_height = MediaQuery.of(context).size.height;
-    double screen_width = MediaQuery.of(context).size.width;
-
+    double screenHeight = MediaQuery.of(context).size.height;
     return MaterialApp(
-      // Create the main application with MaterialApp.
-      debugShowCheckedModeBanner: false,
       // Disable the debug banner.
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         // Create the main screen scaffold.
-        backgroundColor: const Color.fromARGB(148, 197, 96, 255),
+        backgroundColor: colors.backgroundColor,
         resizeToAvoidBottomInset: false,
         // Prevent the screen from resizing when the keyboard appears.
-        body: ListView(
-          padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        body: Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage('./assets/images/bg1.jpg'),
+                fit: BoxFit.cover),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
+            child: Column(
               children: [
-                const Text(
-                  '2 Rajab 1445 AH',
-                  style: TextStyle(color: Colors.white70),
-                ),
-                Container(
-                  width: 80,
-                  height: 35,
-                  decoration: BoxDecoration(
-                      color: const Color.fromARGB(195, 205, 119, 255),
-                      borderRadius: BorderRadius.circular(50)),
-                  child: const Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.location_pin,
-                        color: Colors.white,
-                        size: 15,
+                SizedBox(height: screenHeight > 600 ? 30 : 0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      '2 Rajab 1445 AH',
+                      style: TextStyle(color: colors.primaryFontColor),
+                    ),
+                    Container(
+                      width: 80,
+                      height: 35,
+                      decoration: BoxDecoration(
+                          color: colors.lighterBackgroundColor,
+                          borderRadius: BorderRadius.circular(50)),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.location_pin,
+                            color: colors.primaryFontColor,
+                            size: 15,
+                          ),
+                          Text('Abuja',
+                              style: TextStyle(color: colors.primaryFontColor)),
+                        ],
                       ),
-                      Text('Abuja', style: TextStyle(color: Colors.white)),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-            const SizedBox(
-              height: 60,
-            ),
-            const Center(
-                child: Text(
-              'ISHA',
-              style: TextStyle(color: Colors.white, fontSize: 40),
-            )),
-            const Center(
-                child: Text(
-              'current prayer',
-              style: TextStyle(color: Colors.white70),
-            )),
-            SizedBox(
-              height: screen_height > 600? 150:20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  height: 80,
-                  width: 100,
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(144, 197, 96, 255),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: const Center(
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          'START',
-                          style: TextStyle(color: Colors.white, fontSize: 15),
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          '8:00 PM',
-                          style: TextStyle(color: Colors.white, fontSize: 20),
-                        ),
-                      ],
+                SizedBox(height: screenHeight > 600 ? 120 : 50),
+                Center(
+                  child: Text(
+                    'ISHA',
+                    style: TextStyle(
+                      color: colors.primaryFontColor,
+                      fontSize: 40,
                     ),
                   ),
                 ),
-                const SizedBox(width: 50),
-                Container(
-                  height: 80,
-                  width: 100,
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(144, 197, 96, 255),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: const Center(
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          'END',
-                          style: TextStyle(color: Colors.white, fontSize: 15),
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          '11:50 PM',
-                          style: TextStyle(color: Colors.white, fontSize: 20),
-                        ),
-                      ],
-                    ),
+                Center(
+                  child: Text(
+                    'current prayer',
+                    style: TextStyle(color: colors.secondaryFontColor),
                   ),
                 ),
+                SizedBox(
+                  height: screenHeight > 600 ? 120 : 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: 80,
+                      width: 100,
+                      decoration: BoxDecoration(
+                        color: colors.lighterBackgroundColor,
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Center(
+                        child: Column(
+                          children: [
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              'START',
+                              style: TextStyle(
+                                  color: colors.primaryFontColor, fontSize: 15),
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              '8:00 PM',
+                              style: TextStyle(
+                                  color: colors.primaryFontColor, fontSize: 20),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 50),
+                    Container(
+                      height: 80,
+                      width: 100,
+                      decoration: BoxDecoration(
+                        color: colors.lighterBackgroundColor,
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Center(
+                        child: Column(
+                          children: [
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Text(
+                              'END',
+                              style: TextStyle(
+                                  color: colors.primaryFontColor, fontSize: 15),
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              '11:50 PM',
+                              style: TextStyle(
+                                  color: colors.primaryFontColor, fontSize: 20),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: screenHeight > 600 ? 80 : 50),
+                const MenuWidget(),
               ],
             ),
-            SizedBox(height: screen_height > 600? 50:50),
-            Container(
-              padding: EdgeInsets.only(top: screen_height > 600? 35:0),
-              height: screen_height > 600? 350:250,
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(20)),
-              ),
-              child: const MenuWidget(),
-            ),
-          ],
+          ),
         ),
       ),
     );

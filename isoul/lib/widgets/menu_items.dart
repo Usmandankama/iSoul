@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:isoul/models/menu.dart';
 import 'package:isoul/screens/home_screen.dart';
-import 'package:isoul/widgets/home_content.dart';
+import 'package:isoul/screens/prayer_screen.dart';
+import 'package:isoul/screens/settings_screen.dart';
+import 'package:isoul/widgets/quran.dart';
+import 'package:isoul/custom/contants.dart' as colors;
 
 class MenuWidget extends StatefulWidget {
   const MenuWidget({super.key});
@@ -14,42 +17,39 @@ class _MenuWidgetState extends State<MenuWidget> {
   List<MenuItem> menuItems = [
     MenuItem(
       name: 'Al-Quran',
-      icon: const Icon(Icons.abc),
-      route: MaterialPageRoute(builder: (context) => const HomeContent()),
+      icon: Icons.import_contacts,
+      route: const HomeContent(),
     ),
     MenuItem(
       name: 'Prayer Times',
-      icon: const Icon(
-        Icons.mosque_outlined,
-        color: Color.fromARGB(255, 61, 0, 97),
-      ),
-      route: MaterialPageRoute(builder: (context) => const HomeScreen()),
+      icon: Icons.mosque_outlined,
+      route: const PrayerScreen(),
     ),
     MenuItem(
       name: 'Hadith',
-      icon: const Icon(Icons.book, color: Color.fromARGB(255, 61, 0, 97)),
-      route: MaterialPageRoute(builder: (context) => const HomeScreen()),
+      icon: Icons.collections_bookmark_rounded,
+      route: const HomeScreen(),
     ),
     MenuItem(
-      name: 'Qibla Direction',
-      icon: const Icon(Icons.zoom_out_map_sharp,
-          color: Color.fromARGB(255, 61, 0, 97)),
-      route: MaterialPageRoute(builder: (context) => const HomeScreen()),
+      name: 'Qibla',
+      icon: Icons.explore,
+      route: const HomeScreen(),
+    ),
+    MenuItem(
+      name: 'Calender',
+      icon: Icons.calendar_month_rounded,
+      route: const HomeScreen(),
     ),
     MenuItem(
       name: 'Settings',
-      icon: const Icon(Icons.settings, color: Color.fromARGB(255, 61, 0, 97)),
-      route: MaterialPageRoute(builder: (context) => const HomeScreen()),
-    ),
-    MenuItem(
-      name: 'QURAN',
-      icon: const Icon(Icons.abc, color: Color.fromARGB(255, 61, 0, 97)),
-      route: MaterialPageRoute(builder: (context) => const HomeScreen()),
+      icon: Icons.settings,
+      route: const SettingsScreen(),
     ),
   ];
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
     return Expanded(
       child: GridView.builder(
         itemCount: menuItems.length,
@@ -59,24 +59,28 @@ class _MenuWidgetState extends State<MenuWidget> {
           final menuItem = menuItems[index];
           return GestureDetector(
             onTap: () {
-              Navigator.push(context, menuItem.route);
+              Navigator.push(context,
+                  MaterialPageRoute(builder: ((context) => menuItem.route)));
             },
             child: Column(
               children: [
                 Container(
-                  height: 70,
-                  width: 70,
+                  height: screenHeight > 600? 80:70,
+                  width: screenHeight > 600? 80:70,
                   decoration: BoxDecoration(
-                    color: const Color.fromARGB(55, 197, 96, 255),
-                    // color: ,
+                    // color: const Color.fromARGB(55, 197, 96, 255),
+                    color: colors.lighterBackgroundColor,
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  child: menuItem.icon,
+                  child: Icon(menuItem.icon, color: colors.primaryFontColor),
                 ),
-                const SizedBox(height: 5),
+                const SizedBox(height: 4),
                 Text(
                   menuItem.name,
-                  style: TextStyle(fontSize:15),
+                  style: TextStyle(
+                    fontSize: screenHeight > 600? 15:13,
+                    color: colors.primaryFontColor,
+                  ),
                 )
               ],
             ),

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:isoul/models/surah.dart';
 import 'package:isoul/screens/surah_screen.dart';
 import 'package:http/http.dart' as http;
+import 'package:isoul/custom/contants.dart' as colors;
 
 class SurahList extends StatefulWidget {
   const SurahList({super.key});
@@ -47,10 +48,10 @@ class _SurahListState extends State<SurahList> {
         });
       }
     } catch (e) {
-      const Center(
+      Center(
           child: Text(
         "Connection Error",
-        style: TextStyle(color: Colors.white, fontSize: 40),
+        style: TextStyle(color: colors.primaryFontColor, fontSize: 40),
       ));
     }
   }
@@ -76,16 +77,17 @@ class _SurahListState extends State<SurahList> {
             ayahts: listOfAyahs);
         try {
           return connectionError
-              ? const Center(
+              ? Center(
                   child: Text(
                   "Connection Error",
-                  style: TextStyle(color: Colors.white, fontSize: 40),
+                  style:
+                      TextStyle(color: colors.primaryFontColor, fontSize: 40),
                 ))
               // If there is a connection error, display an error message.
               : Column(
                   children: [
                     ListTile(
-                      textColor: Colors.white70,
+                      textColor: colors.secondaryFontColor,
                       onTap: () {
                         // Navigate to a Surah details page on item click.
                         Navigator.push(

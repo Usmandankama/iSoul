@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 // ignore: library_prefixes
-import '../contants.dart' as AppConstants;
+import '../custom/contants.dart' as colors;
 import 'home_screen.dart';
+import 'dart:async';
 
 class StartupScreen extends StatefulWidget {
   const StartupScreen({super.key});
@@ -12,57 +13,55 @@ class StartupScreen extends StatefulWidget {
 
 class _StartupScreenState extends State<StartupScreen> {
   @override
+  void initState() {
+    super.initState();
+    startupTimer();
+  }
+
+  void startupTimer() {
+    Timer.periodic(const Duration(seconds: 3), (timer) {
+      setState(() {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const HomeScreen(),
+          ),
+        );
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    startupTimer();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [AppConstants.primaryColor, AppConstants.secondaryColor],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-        ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text(
-                'iSoul',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 30,
-                  fontFamily: "Monospace",
-                  fontWeight: FontWeight.bold,
-                ),
+      backgroundColor: colors.backgroundColor,
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              'iSoul',
+              style: TextStyle(
+                color: colors.primaryFontColor,
+                fontSize: 30,
+                fontFamily: "Monospace",
+                fontWeight: FontWeight.bold,
               ),
-              const Text(
-                'Your true companion',
-                style: TextStyle(
-                  color: Color.fromARGB(255, 218, 214, 214),
-                  fontSize: 18,
-                ),
+            ),
+            Text(
+              'Your true companion',
+              style: TextStyle(
+                color: colors.secondaryFontColor,
+                fontSize: 18,
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 20.0),
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const HomeScreen(),
-                      ),
-                    );
-                  },
-                  style: const ButtonStyle(
-                    padding: MaterialStatePropertyAll(
-                      EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                    ),
-                  ),
-                  child: const Text("Get Started"),
-                ),
-              )
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
