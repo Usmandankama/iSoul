@@ -33,20 +33,33 @@ class _SurahPageState extends State<SurahPage> {
   Widget build(BuildContext context) {
     double screenheight = MediaQuery.of(context).size.height;
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor:
+          isLightMode ? const Color.fromRGBO(255, 255, 255, 1) : Colors.black,
       appBar: AppBar(
-        backgroundColor: colors.backgroundColor,
-        foregroundColor: colors.primaryFontColor,
+        backgroundColor: isLightMode ? Colors.black : colors.backgroundColor,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Text(
               widget.surah.surahNameArabic,
+              style: const TextStyle(
+                // color: isLightMode ? Colors.black : colors.primaryFontColor,
+              ),
             ),
             const SizedBox(width: 20),
             IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.light_mode_rounded),
+              onPressed: () {
+                setState(() {
+                  if (isLightMode == false) {
+                    isLightMode = true;
+                  } else if (isLightMode) {
+                    isLightMode = false;
+                  }
+                });
+              },
+              icon: Icon(isLightMode
+                  ? Icons.light_mode_rounded
+                  : Icons.light_mode_outlined),
             ),
           ],
         ),
@@ -58,7 +71,8 @@ class _SurahPageState extends State<SurahPage> {
             return Column(
               children: [
                 ListTile(
-                  textColor: colors.primaryFontColor,
+                  textColor:
+                      isLightMode ? Colors.black : colors.primaryFontColor,
                   trailing: Text(
                     "$index",
                     style: TextStyle(fontSize: screenheight > 600 ? 25 : 20),
