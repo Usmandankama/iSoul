@@ -56,6 +56,9 @@ class _SurahListState extends State<SurahList> {
     }
   }
 
+
+
+
   @override
   Widget build(BuildContext context) {
     return ListView.builder(

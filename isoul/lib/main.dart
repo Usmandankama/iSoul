@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:isoul/screens/startup_screen.dart';
 
+
 void main() {
   runApp(const MyApp());
 }

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:isoul/custom/contants.dart' as colors;
+import 'package:isoul/screens/settings_screen.dart';
 import 'package:isoul/widgets/prayer_list.dart';
 
 class PrayerScreen extends StatefulWidget {
@@ -38,7 +39,16 @@ class _PrayerScreenState extends State<PrayerScreen> {
           children: [
             const SizedBox(),
             const Text('Prayer time'),
-            IconButton(onPressed: () {}, icon: const Icon(Icons.settings))
+            IconButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const SettingsScreen(),
+                    ),
+                  );
+                },
+                icon: const Icon(Icons.settings))
           ],
         ),
         centerTitle: true,
@@ -62,10 +72,11 @@ class _PrayerScreenState extends State<PrayerScreen> {
                   const SizedBox(height: 10),
                   Text(
                     '$hour:$minute',
-                    style:
-                        TextStyle(color: colors.primaryFontColor, fontSize: screenHeight>600?50:35),
+                    style: TextStyle(
+                        color: colors.primaryFontColor,
+                        fontSize: screenHeight > 600 ? 50 : 35),
                   ),
-                  SizedBox(height: screenHeight>600?35:15),
+                  SizedBox(height: screenHeight > 600 ? 35 : 15),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
