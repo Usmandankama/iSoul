@@ -3,7 +3,7 @@ import 'package:isoul/models/menu.dart';
 import 'package:isoul/screens/home_screen.dart';
 import 'package:isoul/screens/prayer_screen.dart';
 import 'package:isoul/screens/settings_screen.dart';
-import 'package:isoul/widgets/quran.dart';
+import 'package:isoul/screens/quran_screen.dart';
 import 'package:isoul/custom/contants.dart' as colors;
 
 class MenuWidget extends StatefulWidget {

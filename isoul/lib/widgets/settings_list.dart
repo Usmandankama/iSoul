@@ -26,6 +26,7 @@ class _SettingsListState extends State<SettingsList> {
       child: Column(
         children: [
           ListTile(
+            // onTap: Navigator.push(context, MaterialPageRoute(builder: )),
             shape: const StadiumBorder(),
             contentPadding: EdgeInsets.symmetric(
                 horizontal: 30, vertical: screenHeight > 600 ? 10 : 3),

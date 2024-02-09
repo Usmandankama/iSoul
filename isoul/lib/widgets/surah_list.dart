@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:isoul/models/surah.dart';
 import 'package:isoul/screens/surah_content.dart';
-import 'package:http/http.dart' as http;
 import 'package:isoul/custom/contants.dart' as colors;
 
 class SurahList extends StatefulWidget {
@@ -16,68 +16,56 @@ class SurahList extends StatefulWidget {
 class _SurahListState extends State<SurahList> {
   final GlobalKey _listKey = GlobalKey();
   List<dynamic> ayahts = [];
-  List<dynamic> surahsFromApi = [];
+  List<dynamic> ayahtsTranslated = [];
+  List<dynamic> surats = [];
+  List<dynamic> suratsTranslated = [];
   bool connectionError = false;
+  // List<dynamic> surahFromLocal = [];
 
   @override
   void initState() {
     super.initState();
     // Initialize the widget state by fetching Quran data when it's created.
-    fetchQuranData();
+    readJsonData();
+    // fetchQuranData();
   }
 
-  void fetchQuranData() async {
-    // Function to fetch Quran data from the API.
-    try {
-      const url = 'http://api.alquran.cloud/v1/quran/quran-uthmani';
-      final uri = Uri.parse(url);
-      final response = await http.get(uri);
-      final body = response.body;
-      final json = jsonDecode(body);
-      final results = json['data']['surahs'];
-
-      if (response.statusCode == 200) {
-        // If the API call is successful, update the state with the fetched data.
-        setState(() {
-          surahsFromApi = results;
-        });
-      } else {
-        // If there is an error in the API call, set a connection error flag.
-        setState(() {
-          connectionError = true;
-        });
-      }
-    } catch (e) {
-      Center(
-          child: Text(
-        "Connection Error",
-        style: TextStyle(color: colors.primaryFontColor, fontSize: 40),
-      ));
-    }
+  void readJsonData() async {
+    final String responses =
+        await rootBundle.loadString('assets/data/quran.json');
+    final data = await json.decode(responses);
+    final String responsesTranslated =
+        await rootBundle.loadString('assets/data/translation.json');
+    final dataTranslated = await json.decode(responsesTranslated);
+    setState(() {
+      surats = data['surahs'];
+      suratsTranslated = dataTranslated['surahs'];
+    });
   }
-
-
-
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
       shrinkWrap: true,
       key: _listKey,
-      physics: const NeverScrollableScrollPhysics(),
       padding: const EdgeInsets.symmetric(vertical: 10),
-      itemCount: surahsFromApi.length,
+      itemCount: surats.length,
       itemBuilder: (context, index) {
-        final surah = surahsFromApi[index];
+        final surah = surats[index];
+        final surahTranslated = suratsTranslated[index];
         final listOfAyahs = surah['ayahs'];
         ayahts = listOfAyahs;
+        final listOfAyahsTranslated = surahTranslated['ayahs'];
+        ayahtsTranslated = listOfAyahsTranslated;
         final name = surah['name'];
         final engName = surah['englishNameTranslation'];
         var surat = Surah(
             surahNameEng: surah['englishNameTranslation'],
             surahNameArabic: surah['name'],
             cityRevealed: surah['revelationType'],
-            ayahts: listOfAyahs);
+            ayahts: listOfAyahs,
+            ayahtsTranslated: listOfAyahsTranslated
+            );
         try {
           return connectionError
               ? Center(

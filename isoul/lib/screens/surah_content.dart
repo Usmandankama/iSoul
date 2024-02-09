@@ -4,7 +4,7 @@ import 'package:isoul/custom/contants.dart' as colors;
 
 class SurahContent extends StatefulWidget {
   final Surah surah;
-  const SurahContent({super.key, required this.surah});
+  const SurahContent({super.key, required this.surah,});
 
   @override
   State<SurahContent> createState() => _SurahContentState();
@@ -13,6 +13,7 @@ class SurahContent extends StatefulWidget {
 class _SurahContentState extends State<SurahContent> {
   bool isLightMode = true;
   List<dynamic> ayahts = [];
+  List<dynamic> ayahtsTranslated = [];
   int index = 1;
 
   @override
@@ -25,6 +26,7 @@ class _SurahContentState extends State<SurahContent> {
   void _addAyah() {
     // Function to add Ayahs to the widget's state.
     setState(() {
+      ayahtsTranslated = widget.surah.ayahtsTranslated;
       ayahts = widget.surah.ayahts;
     });
   }
@@ -80,6 +82,10 @@ class _SurahContentState extends State<SurahContent> {
                   ayahts[index]['text'],
                   textDirection: TextDirection.rtl,
                   style: TextStyle(fontSize: screenheight > 600 ? 25 : 20),
+                ),
+                subtitle: Text(
+                  ayahtsTranslated[index]['text'],
+                  style: TextStyle(fontSize: screenheight > 600 ? 18 : 12,),
                 ),
               ),
               const Divider(

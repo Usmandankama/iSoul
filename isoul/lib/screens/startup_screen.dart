@@ -31,11 +31,6 @@ class _StartupScreenState extends State<StartupScreen> {
     });
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-    startupTimer();
-  }
 
   @override
   Widget build(BuildContext context) {
