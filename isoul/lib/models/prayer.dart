@@ -1,12 +1,30 @@
 class Prayer {
-  String prayerName;
-  String time;
-  dynamic icon;
+  String fajr;
+  String shurouq;
+  String zuhur;
+  String asr;
+  String magrib;
+  String isha;
+
   Prayer({
-    required this.prayerName,
-    required this.time,
-    required this.icon,
+    required this.fajr,
+    required this.shurouq,
+    required this.zuhur,
+    required this.asr,
+    required this.magrib,
+    required this.isha,
   });
+
+  factory Prayer.fromJson(Map<String, dynamic> json) {
+    return Prayer(
+      fajr: json['items'][0]['fajr'],
+      shurouq: json['items'][0]['shurooq'],
+      zuhur: json['items'][0]['dhuhr'],
+      asr: json['items'][0]['asr'],
+      magrib: json['items'][0]['maghrib'],
+      isha: json['items'][0]['isha'],
+    );
+  }
 }
 // void fetchQuranData() async {
 //   // Function to fetch Quran data from the API.

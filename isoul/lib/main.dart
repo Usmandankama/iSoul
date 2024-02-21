@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:isoul/screens/startup_screen.dart';
+
+import 'screens/home_screen.dart';
 
 
 void main() {
@@ -11,14 +12,6 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'iSoul',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 36, 41, 51)),
-        useMaterial3: true,
-      ),
-      home: const StartupScreen()
-    );
+    return HomeScreen();
   }
 } 

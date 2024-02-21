@@ -149,7 +149,7 @@ class _PrayerScreenState extends State<PrayerScreen> {
               ),
             ),
           ),
-          const Expanded(child: PrayerList()),
+          Expanded(child: PrayerList()),
         ],
       ),
     );
